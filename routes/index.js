@@ -29,6 +29,7 @@ router.post('/signup', function(req,res){
 });
 
 router.post('/signin', function(req,res){
+    console.log("Attempting signin")
     User.findOne({
         username: req.body.username
     }, function(err,user){
@@ -37,6 +38,7 @@ router.post('/signin', function(req,res){
         if(!user){
             res.status(401).send({success:false, msg:'User not found'});
         } else{
+            console.log(user)
             user.comparePassword(req.body.password, function(err,isMatch){
                 if(isMatch && !err){
                     var token = jwt.sign(user.toJSON(), config.secret);

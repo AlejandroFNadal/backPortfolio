@@ -6,7 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser')
 var cors = require('cors');
 const app = express()
-const port = 3000
+const port = 5000
 
 mongoose.connect(config.database, {useCreateIndex: true, useNewUrlParser:true, useUnifiedTopology:true});
 
