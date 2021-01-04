@@ -28,7 +28,7 @@ router.post('/signup', function(req,res){
     }
 });
 
-router.post('/sigin', function(req,res){
+router.post('/signin', function(req,res){
     User.findOne({
         username: req.body.username
     }, function(err,user){
@@ -39,7 +39,7 @@ router.post('/sigin', function(req,res){
         } else{
             user.comparePassword(req.body.password, function(err,isMatch){
                 if(isMatch && !err){
-                    var token = jwt.sign(user, config.secret);
+                    var token = jwt.sign(user.toJSON(), config.secret);
                     res.json({success:true, token: 'JWT '+token})
                 } else{
                     res.status(401).send({success:false, msg: 'Wrong pass'});
