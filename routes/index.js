@@ -67,7 +67,7 @@ router.post('/signin', function(req,res){
 
 router.get('/authorize', passport.authenticate('jwt',{session:false}), function(req,res){
     console.log("attempt to authorize")
-    console.log(req.header)
+    console.log(JSON.stringify(req.headers));
     var token = getToken(req.headers);
     if(token){
         res.json({success:true})
