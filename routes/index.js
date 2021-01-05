@@ -7,10 +7,24 @@ var config = require('../config/database');
 var jwt = require('jsonwebtoken')
  , LocalStrategy = require('passport-local').Strategy;
 
+require('../config/passport')(passport);
  router.get('/',(req,res)=>{
     res.send('Hello World!')
 })
 
+var getToken = function(headers){
+    if(headers && headers.authorization){
+        var parted = headers.authorization.split(' ');
+        if(parted.length === 2){
+            return parted[1];
+        }
+        else{
+            return null;
+        }
+    } else{
+        return null;
+    }
+};
 router.post('/signup', function(req,res){
     if(!req.body.username || !req.body.password){
         res.json({success: false, msg: 'Please give username and pass'});
@@ -29,7 +43,7 @@ router.post('/signup', function(req,res){
 });
 
 router.post('/signin', function(req,res){
-    console.log("Attempting signin")
+    console.log("Attempting signin ")
     User.findOne({
         username: req.body.username
     }, function(err,user){
@@ -50,4 +64,16 @@ router.post('/signin', function(req,res){
         }
     })
 })
+
+router.get('/authorize', passport.authenticate('jwt',{session:false}), function(req,res){
+    console.log("attempt to authorize")
+    console.log(req.header)
+    var token = getToken(req.headers);
+    if(token){
+        res.json({success:true})
+    }
+    else{
+        return res.status(403).send({success:false})
+    }
+});
 module.exports = router;
