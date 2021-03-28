@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: The backend of my portfolio
+Resources:
+  portfolioBackend:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.app
+      Runtime: nodejs12.x
+      CodeUri: portfolioBackend
+      Events:
+        MyApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get

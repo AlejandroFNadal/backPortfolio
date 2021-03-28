@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: The backend of my portfolio
+Resources:
+  portfolioBackend:
+    Type: AWS::Serverless::Function
+    Properties: 
+      Handler: index.app
+      Runtime: nodejs12.x
+      CodeUri: ./
+      Events:
+        MyApi:
+          Type: Api
+          Properties:
+            Path: '/'
+            Method: get
+Outputs:
+  portfolioBackendApi:
+    Description: "API Gateway endpoint URL for Prod stage for backend"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.sa-east-1.amazonaws.com/Prod/"
+  portfolioBackend:
+    Description: "Backend Lambda Function"
+    Value: !GetAtt portfolioBackend.Arn
