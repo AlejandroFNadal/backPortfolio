@@ -31,7 +31,7 @@ var getToken = function(headers){
         return null;
     }
 };
-router.post('/signup', function(req,res){
+/*router.post('/signup', function(req,res){
     if(!req.body.username || !req.body.password){
         res.json({success: false, msg: 'Please give username and pass'});
     } else{
@@ -46,7 +46,7 @@ router.post('/signup', function(req,res){
         res.json({success:true,msg:'Success'});
     });
     }
-});
+});*/
 
 router.post('/signin', function(req,res){
     console.log("Attempting signin ")

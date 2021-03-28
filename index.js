@@ -5,10 +5,17 @@ var config = require('./config/database');
 var path = require('path');
 var cookieParser = require('cookie-parser')
 var cors = require('cors');
+
+const sls = require('serverless-http')
 const app = express()
 const port = 5000
-
-mongoose.connect(config.database, {useCreateIndex: true, useNewUrlParser:true, useUnifiedTopology:true});
+require('dotenv').config()
+let db = config.database
+if(process.env.ENV == 'PROD'){
+    db = config.remoteDB
+    console.log("Using remote DB")
+}
+mongoose.connect(db, {useCreateIndex: true, useNewUrlParser:true, useUnifiedTopology:true});
 
 var api = require('./routes/index');
 app.use(cors());
@@ -23,8 +30,9 @@ app.use(require('./routes/index'))
 
 
 app.listen(port,() =>{
-    console.log('Example app')
+    console.log('Backend Portfolio runnning')
 })
 
 //this is done so I can get a handler for Lambda
-module.exports = app;
+//exports.app = app;
+module.exports.server = sls(app)

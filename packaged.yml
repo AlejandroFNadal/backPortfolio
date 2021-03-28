@@ -7,7 +7,7 @@ Resources:
     Properties:
       Handler: index.app
       Runtime: nodejs12.x
-      CodeUri: s3://lambda-deployment-artifacts-portfolio-backend/8382f67ec6d7f3357776097028121f49
+      CodeUri: s3://lambda-deployment-artifacts-portfolio-backend/b6b3fc02faa36f650818ea963975122b
       Events:
         MyApi:
           Type: Api
