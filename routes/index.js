@@ -49,6 +49,8 @@ var getToken = function(headers){
 });*/
 
 router.post('/signin', function(req,res){
+    res.setHeader('content-type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     console.log("Attempting signin ")
     User.findOne({
         username: req.body.username
@@ -72,6 +74,8 @@ router.post('/signin', function(req,res){
 })
 
 router.get('/authorize', passport.authenticate('jwt',{session:false}), function(req,res){
+    res.setHeader('content-type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     console.log("attempt to authorize")
     console.log(JSON.stringify(req.headers));
     var token = getToken(req.headers);
@@ -85,6 +89,8 @@ router.get('/authorize', passport.authenticate('jwt',{session:false}), function(
 
 router.post('/saveContact', async function(req,res,next){
     try{
+        res.setHeader('content-type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
         aName = req.body.name;
         aEmail = req.body.email;
         aMessage = req.body.message;
@@ -108,6 +114,8 @@ router.post('/saveContact', async function(req,res,next){
 
 router.get('/getContacts', passport.authenticate('jwt',{session:false}),async function(req,res,next){
     try{
+        res.setHeader('content-type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
         const contacts = await Contact.find({});
         res.statusCode= 200;
         res.setHeader('content-type', 'application/json');
